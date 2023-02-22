@@ -8,6 +8,7 @@ export async function signUp(req,res,next){
 
     try{
         await connectionDB.query("INSERT INTO users(name, email, password) VALUES($1, $2, $3)",[name, email, encryptedPassword]);
+
         res.sendStatus(201);
     }catch(err){
         res.status(500).send(err.message);
@@ -25,11 +26,12 @@ export async function signIn(req,res,next){
     } 
  
     try{
-        var token = jwt.sign({id}, "Stack" , {
+        var token = jwt.sign({id}, process.env.SECRET , {
             expiresIn: 1800
         });
         if(bcrypt.compareSync(password, user.password)){
             res.status(200).send(token);
+            await connectionDB.query('INSERT INTO sessions ("userId") VALUES($1)',[user.id])
         } else {
             return res.sendStatus(401);
         }
