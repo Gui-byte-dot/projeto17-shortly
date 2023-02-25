@@ -51,3 +51,32 @@ export async function updateUrl(req,res){
     }
 }
 
+export async function deleteUrl(req,res){
+    const {id} = req.params;
+    try{
+        const {rows:verifyDelId} = await connectionDB.query('SELECT * FROM urls WHERE id=$1',[id]);
+        const [verifyId] = verifyDelId;
+
+        const {rows:verifyUrl} = await connectionDB.query('SELECT * FROM sessions ORDER BY id DESC LIMIT 1');
+        const [verifyUrlId] = verifyUrl;
+
+        if(!verifyDelId){
+            return res.status(404);
+        }
+
+        if(verifyId.userId !== verifyUrlId.userId){
+            return res.status(401).send("A url não pertence ao usuário");
+        }
+
+        await connectionDB.query('DELETE FROM urls WHERE id=$1',[id]);
+        res.sendStatus(204);
+
+
+        console.log(verifyId.userId);
+        console.log(verifyUrlId.userId);
+
+    }catch(err){
+        console.log(err);
+        return res.sendStatus(404);
+    }
+}
