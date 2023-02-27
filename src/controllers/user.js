@@ -80,3 +80,39 @@ export async function deleteUrl(req,res){
         return res.sendStatus(404);
     }
 }
+
+export async function findAllShorts(req,res){
+    const {rows: userShort} = await connectionDB.query('SELECT * FROM sessions ORDER BY id DESC LIMIT 1');
+    const [userShorts] = userShort;
+    const userId = userShorts.userId;
+
+
+    
+    // const userId = userShorts.userId;
+    try{
+        const {rows:allShortsUrls} = await connectionDB.query(`
+            SELECT 
+            users.id as id, 
+            users.name as name, 
+            SUM(visits) as "visitCount", 
+            json_agg(
+                json_build_object(
+                    'id', urls.id,
+                    'shortUrl', urls."shortUrl",
+                    'url', urls.url,
+                    'visitCount', urls.visits
+                )
+            ) as "shortenedUrls"
+            FROM urls
+            JOIN users
+            ON urls."userId" = users.id
+            WHERE users.id = $1
+            GROUP BY users.id
+        `, [userId]);
+        res.status(200).send(allShortsUrls);
+
+    }catch(err){
+        console.log(userShorts);
+        return res.sendStatus(500);
+    }
+}
