@@ -116,3 +116,27 @@ export async function findAllShorts(req,res){
         return res.sendStatus(500);
     }
 }
+
+export async function getRankings(req,res){
+    try{
+        const {rows: rankings} = 
+        await connectionDB.query(`
+        SELECT 
+        users.id AS id,
+        users.name AS name,
+        COUNT(urls) AS "linksCount",
+        COALESCE(SUM(visits), 0) as "visitCount"
+        FROM users
+        LEFT JOIN urls
+        ON users.id = urls."userId"
+        GROUP BY users.id
+        ORDER BY "visitCount" DESC
+        LIMIT 10
+    `);
+    res.status(200).send(rankings);
+    }catch(err){
+        console.log(err);
+        res.status(500).send(err.message);
+    }
+    
+}
