@@ -1,4 +1,3 @@
-Password: 
 --
 -- PostgreSQL database dump
 --
@@ -167,6 +166,7 @@ COPY public.sessions (id, "userId") FROM stdin;
 11	1
 12	2
 13	2
+14	2
 \.
 
 
@@ -178,6 +178,7 @@ COPY public.urls (id, url, "shortUrl", visits, "userId", "createdAt") FROM stdin
 2	https://vasco.com.br/	Qbq-HvQww9EycLjOevtUl	0	2	2023-02-22 14:52:16.766619
 3	https://vasco.com.br/	JVPpBk6q2ABpT2NnSeC8i	0	1	2023-02-22 14:52:40.314667
 1	https://vasco.com.br/	FnT_UkcUwskSh_RXpzoBd	1	2	2023-02-22 14:51:53.555944
+4	https://vasco.com.br/	6eKsM3rRdZtl1GZ4IIY20	0	2	2023-03-01 03:20:51.079047
 \.
 
 
@@ -205,14 +206,14 @@ COPY public.users (id, name, email, password) FROM stdin;
 -- Name: sessions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.sessions_id_seq', 13, true);
+SELECT pg_catalog.setval('public.sessions_id_seq', 14, true);
 
 
 --
 -- Name: urls_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.urls_id_seq', 3, true);
+SELECT pg_catalog.setval('public.urls_id_seq', 4, true);
 
 
 --
