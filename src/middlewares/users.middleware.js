@@ -1,6 +1,6 @@
 import { urlSchema } from "../models/urls.models.js";
 import jwt from "jsonwebtoken";
-import { connectionDB } from "../database/db.js";
+import  connectionDB  from "../database/db.js";
 
 const secret = "meu-segredo";//esse segredo do JWT seria uma config
 

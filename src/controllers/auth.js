@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { connectionDB } from '../database/db.js';
+import  connectionDB  from '../database/db.js';
 
 export async function signUp(req,res,next){
     const {name, email, password} = res.locals.signup;

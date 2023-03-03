@@ -1,4 +1,4 @@
-import { connectionDB } from "../database/db.js";
+import connectionDB from "../database/db.js";
 import { userSchema } from "../models/users.models.js";
 
 export async function validateSchemaUser(req,res,next){
