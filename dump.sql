@@ -21,7 +21,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: sessions; Type: TABLE; Schema: public; Owner: postgres
+-- Name: sessi ons; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.sessions (
